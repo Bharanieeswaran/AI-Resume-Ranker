@@ -1,0 +1,7 @@
+Flask
+pandas
+spacy
+PyMuPDF
+docx2txt
+scikit-learn
+reportlab

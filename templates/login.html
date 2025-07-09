@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: #0ff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .glow-box {
+      border: 2px solid #0ff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #0ff;
+      background: #111;
+    }
+    input, button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      background: #000;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 5px;
+      width: 100%;
+    }
+    a { color: #0ff; text-decoration: none; display: block; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <form class="glow-box" method="POST">
+    <h2>🔐 Login</h2>
+    {% if error %}<p style="color: red;">{{ error }}</p>{% endif %}
+    <input name="username" placeholder="Username" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+    <a href="/register">📝 Register</a>
+    <a href="/forgot">❓ Forgot Password</a>
+  </form>
+</body>
+</html>

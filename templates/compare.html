@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Compare Resumes</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: #0ff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    h1 { text-align: center; }
+    .box {
+      border: 2px solid #0ff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #0ff;
+      background: #111;
+      margin-bottom: 30px;
+    }
+    textarea, input[type="file"], button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background: #000;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 5px;
+    }
+    .row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .col {
+      flex: 1;
+      min-width: 300px;
+    }
+    a {
+      color: #0ff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="/" style="display: block; margin-bottom: 10px;">⬅ Back to Home</a>
+  <h1>🆚 Compare Two Resumes</h1>
+
+  <form class="box" method="POST" enctype="multipart/form-data">
+    <label>Paste Job Description:</label>
+    <textarea name="job_desc" rows="4" required>{{ res1.job_desc if res1 and not res2 else '' }}</textarea>
+    <label>Upload Resume {{ '2' if res1 and not res2 else '1' }}:</label>
+    <input type="file" name="resume" required>
+    <button type="submit">🔍 Analyze Resume</button>
+  </form>
+
+  {% if res1 %}
+  <div class="row">
+    <div class="col box">
+      <h2>📄 Resume 1</h2>
+      <p><b>Score:</b> {{ '%.4f'|format(res1.score) }}</p>
+      <p><b>Matched Keywords:</b> {{ res1.matched }}</p>
+      <p><b>Missing Skills:</b> {{ res1.gap|join(', ') }}</p>
+      <p><b>Feedback:</b> {{ res1.feedback }}</p>
+      <p><b>Details:</b><br>
+        📛 Name: {{ res1.section.Name }}<br>
+        📧 Email: {{ res1.section.Email }}<br>
+        📞 Phone: {{ res1.section.Phone }}<br>
+        🎯 Skills: {{ res1.section.Skills }}<br>
+        🎓 Education: {{ res1.section.Education }}<br>
+        💼 Experience: {{ res1.section.Experience }}
+      </p>
+    </div>
+
+    {% if res2 %}
+    <div class="col box">
+      <h2>📄 Resume 2</h2>
+      <p><b>Score:</b> {{ '%.4f'|format(res2.score) }}</p>
+      <p><b>Matched Keywords:</b> {{ res2.matched }}</p>
+      <p><b>Missing Skills:</b> {{ res2.gap|join(', ') }}</p>
+      <p><b>Feedback:</b> {{ res2.feedback }}</p>
+      <p><b>Details:</b><br>
+        📛 Name: {{ res2.section.Name }}<br>
+        📧 Email: {{ res2.section.Email }}<br>
+        📞 Phone: {{ res2.section.Phone }}<br>
+        🎯 Skills: {{ res2.section.Skills }}<br>
+        🎓 Education: {{ res2.section.Education }}<br>
+        💼 Experience: {{ res2.section.Experience }}
+      </p>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+</body>
+</html>

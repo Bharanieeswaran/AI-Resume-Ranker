@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Resume Ranker</title>
+  <style>
+    body {
+      background: #000;
+      color: #0ff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    h1 { text-align: center; }
+    .form-box {
+      border: 2px solid #0ff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #0ff;
+      background: #111;
+      max-width: 600px;
+      margin: auto;
+    }
+    textarea, input[type="file"], button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background: #000;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 5px;
+    }
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #0ff;
+      padding: 10px;
+    }
+    a { color: #0ff; text-decoration: none; }
+    .top-right {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+    .nav-buttons {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    .nav-buttons a {
+      margin: 0 10px;
+      color: #0ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-right">
+    <a href="/logout">🔓 Logout</a>
+  </div>
+  <div class="nav-buttons">
+    <a href="/">🏆 Rank Multiple Resumes</a> |
+    <a href="/check_rank">📌 Check Your Rank</a> |
+    <a href="/compare">⚔️ Compare Two Resumes</a>
+  </div>
+  <h1>⚡ AI Resume Ranker</h1>
+  <form class="form-box" method="POST" enctype="multipart/form-data">
+    <label>Paste Job Description:</label>
+    <textarea name="job_desc" rows="5" required></textarea>
+    <label>Select Resumes (PDF/DOCX):</label>
+    <input type="file" name="resumes" multiple required>
+    <button type="submit">🔍 Rank Resumes</button>
+  </form>
+
+  {% if ranked %}
+  <h2>📊 Ranking Result</h2>
+  <table>
+    <tr><th>#</th><th>Resume</th><th>Score</th><th>Matched Keywords</th></tr>
+    {% for row in ranked %}
+      {% set i = loop.index %}
+      <tr>
+        <td>{{ i }}</td>
+        <td>{{ row[0] }}</td>
+        <td>{{ '%.4f'|format(row[1]) }}</td>
+        <td>{{ row[2] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <p><a href="/reports/{{ report_link }}">⬇ Download CSV</a> | <a href="/reports/{{ pdf_link }}">⬇ Download PDF</a></p>
+  {% endif %}
+</body>
+</html>

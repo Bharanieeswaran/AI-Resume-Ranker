@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Check Your Rank</title>
+  <style>
+    body { background: #000; color: #0ff; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+    h1 { text-align: center; }
+    .form-box {
+      border: 2px solid #0ff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #0ff;
+      background: #111;
+      max-width: 600px;
+      margin: auto;
+    }
+    textarea, input[type="file"], button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background: #000;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 5px;
+    }
+    .result { margin-top: 30px; max-width: 800px; margin-left: auto; margin-right: auto; }
+    .top-right { position: absolute; top: 10px; right: 20px; }
+    a { color: #0ff; text-decoration: none; }
+    .nav-buttons { text-align: center; margin-bottom: 20px; font-size: 16px; }
+    .nav-buttons a { margin: 0 10px; color: #0ff; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="top-right">
+    <a href="/logout">🔓 Logout</a>
+  </div>
+  <div class="nav-buttons">
+    <a href="/">🏆 Rank Multiple Resumes</a> |
+    <a href="/check_rank">📌 Check Your Rank</a> |
+    <a href="/compare">⚔️ Compare Two Resumes</a>
+  </div>
+  <h1>📌 Check Your Rank</h1>
+  <form class="form-box" method="POST" enctype="multipart/form-data">
+    <label>Paste Job Description:</label>
+    <textarea name="job_desc" rows="5" required></textarea>
+    <label>Upload Your Resume (PDF/DOCX):</label>
+    <input type="file" name="resume" required>
+    <button type="submit">📈 Check My Rank</button>
+  </form>
+
+  {% if score is defined %}
+  <div class="result">
+    <h2>📊 Analysis Result</h2>
+    <p><strong>Score:</strong> {{ '%.4f'|format(score) }}</p>
+    <p><strong>Matched Keywords:</strong> {{ matched }}</p>
+    <p><strong>Missing Keywords:</strong> {{ gap|join(', ') }}</p>
+    <p><strong>Feedback:</strong> {{ feedback }}</p>
+    <h3>🔍 Extracted Info</h3>
+    <ul>
+      <li><strong>Name:</strong> {{ sections.Name }}</li>
+      <li><strong>Email:</strong> {{ sections.Email }}</li>
+      <li><strong>Phone:</strong> {{ sections.Phone }}</li>
+      <li><strong>Skills Section:</strong> {{ sections.Skills }}</li>
+      <li><strong>Education Section:</strong> {{ sections.Education }}</li>
+      <li><strong>Experience Section:</strong> {{ sections.Experience }}</li>
+    </ul>
+  </div>
+  {% endif %}
+</body>
+</html>
