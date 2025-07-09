@@ -1,8 +1,14 @@
 Flask
-pandas
-spacy
 PyMuPDF
 docx2txt
+pandas
 scikit-learn
 reportlab
+
+# Lock specific versions for spaCy and numpy to avoid build issues
+spacy==3.7.2
+numpy==1.26.4
+blis==0.7.11
+
+# Include model download
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
